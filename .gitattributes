@@ -67,3 +67,7 @@
 
 # Ensure C# files are treated as C#
 *.cs        text diff=csharp
+
+*.css linguist-detectable=true
+*.cshtml linguist-detectable=false
+*.cs linguist-detectable=true
