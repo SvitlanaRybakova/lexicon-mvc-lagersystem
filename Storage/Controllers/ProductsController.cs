@@ -35,7 +35,7 @@ namespace Storage.Controllers
                 Name = e.Name,
                 Price = e.Price,
                 Count = e.Count,
-                InventoryValue = e.Price * e.Count,
+                InventoryValue = (e.Price > 0 && e.Count > 0) ? e.Price * e.Count : 0,
             });
             return View(await model.ToListAsync());
         }
