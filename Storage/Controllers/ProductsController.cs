@@ -75,7 +75,7 @@ namespace Storage.Controllers
             {
                 _context.Add(product);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ProductList));
             }
             return View(product);
         }
@@ -126,7 +126,7 @@ namespace Storage.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(ProductList));
             }
             return View(product);
         }
@@ -161,7 +161,7 @@ namespace Storage.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction(nameof(ProductList));
         }
 
         private bool ProductExists(int id)
