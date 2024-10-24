@@ -123,7 +123,8 @@ namespace Storage.Controllers
                 Shelf = productViewModel.Shelf,
                 Category = productViewModel.Category,
                 Description = productViewModel.Description,
-                Orderdate = productViewModel.Orderdate,
+                Orderdate = productViewModel.Orderdate
+                ,
             };
 
             if (id != product.Id)
