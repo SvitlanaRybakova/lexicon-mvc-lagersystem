@@ -69,15 +69,26 @@ namespace Storage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Price,Orderdate,Category,Shelf,Count,Description")] Product product)
+        public async Task<IActionResult> Create(CreateEditProductViewModel productViewModel)
         {
             if (ModelState.IsValid)
             {
+                var product = new Product
+                {
+                    Id = productViewModel.Id,
+                    Name = productViewModel.Name,
+                    Price = productViewModel.Price,
+                    Count = productViewModel.Count,
+                    Shelf = productViewModel.Shelf,
+                    Category = productViewModel.Category,
+                    Description = productViewModel.Description,
+                    Orderdate = productViewModel.Orderdate,
+                };
                 _context.Add(product);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(ProductList));
             }
-            return View(product);
+            return View(productViewModel);
         }
 
         // GET: Products/Edit/5
@@ -101,8 +112,20 @@ namespace Storage.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Price,Orderdate,Category,Shelf,Count,Description")] Product product)
+        public async Task<IActionResult> Edit(int id, CreateEditProductViewModel productViewModel)
         {
+            var product = new Product
+            {
+                Id = productViewModel.Id,
+                Name = productViewModel.Name,
+                Price = productViewModel.Price,
+                Count = productViewModel.Count,
+                Shelf = productViewModel.Shelf,
+                Category = productViewModel.Category,
+                Description = productViewModel.Description,
+                Orderdate = productViewModel.Orderdate,
+            };
+
             if (id != product.Id)
             {
                 return NotFound();
@@ -128,7 +151,7 @@ namespace Storage.Controllers
                 }
                 return RedirectToAction(nameof(ProductList));
             }
-            return View(product);
+            return View(productViewModel);
         }
 
         // GET: Products/Delete/5
