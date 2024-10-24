@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.SqlServer.Query.Internal;
 using Storage.Data;
 using Storage.Models;
 using Storage.ViewModel;
@@ -191,6 +192,22 @@ namespace Storage.Controllers
         private bool ProductExists(int id)
         {
             return _context.Product.Any(e => e.Id == id);
+        }
+
+        public async Task <IActionResult> Search(string categoryQuery)
+        {
+            if (string.IsNullOrEmpty(categoryQuery)) return RedirectToAction(nameof(ProductList));
+
+            var results = _context.Product.Where(e => e.Category.Contains(categoryQuery))
+                     .Select(e => new ProductListViewModel
+                     {
+                         Id = e.Id,
+                         Name = e.Name,
+                         Price = e.Price,
+                         Count = e.Count,
+                         InventoryValue = (e.Price > 0 && e.Count > 0) ? e.Price * e.Count : 0,
+                     });
+            return View("ProductList", await results.ToListAsync());
         }
     }
 }
