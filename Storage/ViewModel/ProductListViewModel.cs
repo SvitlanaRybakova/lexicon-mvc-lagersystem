@@ -8,6 +8,7 @@ namespace Storage.ViewModel
         public int Id { get; set; }
         [DisplayName ("Product Name")]
         public string Name { get; set; }
+        public string Category { get; set; }
         public int Price {  get; set; }
         [DisplayName("Stock level")]
         public int Count { get; set; }

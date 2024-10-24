@@ -6,12 +6,29 @@
 
 <h1>ProductList</h1>
 <div>
-<form asp-action="Search">
-    <div class="input-group my-3">
-        <input type="text" class="form-control" name="categoryQuery" placeholder="Search on category" />
-        <button class="btn btn-outline-secondary" type="submit">Search</button>
-    </div>
-</form>
+    <form asp-action="Search">
+        <div class="row">
+            <div class="form-group col">
+                <label>Search on Product Name</label>
+                <input type="text" class="form-control" name="nameQuery" placeholder="Search" />
+
+            </div>
+            <div class="form-group col">
+                <label for="category" class="control-label">Search on Category</label>
+                <select id="category" class="form-control" name="categoryQuery">
+                    <option></option>
+                    <option>Other</option>
+                    <option>Tech</option>
+                    <option>Home</option>
+                    <option>Hobby</option>>
+                    <option>Office</option>
+                    <option>Toys</option>
+                    <option>Sports Equipment</option>
+                </select>
+            </div>
+        </div>
+        <button class="btn btn-outline-secondary my-3" type="submit">Search</button>
+    </form>
 </div>
 
 
@@ -23,6 +40,9 @@
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Category)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Price)
@@ -37,26 +57,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Count)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InventoryValue)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Category)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.InventoryValue)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

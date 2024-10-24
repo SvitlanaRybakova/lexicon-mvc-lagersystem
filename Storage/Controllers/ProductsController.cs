@@ -34,6 +34,7 @@ namespace Storage.Controllers
             {
                 Id = e.Id,
                 Name = e.Name,
+                Category = e.Category,
                 Price = e.Price,
                 Count = e.Count,
                 InventoryValue = (e.Price > 0 && e.Count > 0) ? e.Price * e.Count : 0,
@@ -194,20 +195,36 @@ namespace Storage.Controllers
             return _context.Product.Any(e => e.Id == id);
         }
 
-        public async Task <IActionResult> Search(string categoryQuery)
+        public async Task<IActionResult> Search(string nameQuery, string categoryQuery)
         {
-            if (string.IsNullOrEmpty(categoryQuery)) return RedirectToAction(nameof(ProductList));
+            // Start with the full product list
+            var query = _context.Product.AsQueryable();
 
-            var results = _context.Product.Where(e => e.Category.Contains(categoryQuery))
-                     .Select(e => new ProductListViewModel
-                     {
-                         Id = e.Id,
-                         Name = e.Name,
-                         Price = e.Price,
-                         Count = e.Count,
-                         InventoryValue = (e.Price > 0 && e.Count > 0) ? e.Price * e.Count : 0,
-                     });
+            // Apply the filters conditionally
+            if (!string.IsNullOrEmpty(nameQuery))
+            {
+                query = query.Where(e => e.Name.Contains(nameQuery));
+            }
+
+            if (!string.IsNullOrEmpty(categoryQuery))
+            {
+                query = query.Where(e => e.Category.Contains(categoryQuery));
+            }
+
+            // Project the results to the view model
+            var results = query.Select(e => new ProductListViewModel
+            {
+                Id = e.Id,
+                Name = e.Name,
+                Category = e.Category,
+                Price = e.Price,
+                Count = e.Count,
+                InventoryValue = (e.Price > 0 && e.Count > 0) ? e.Price * e.Count : 0,
+            });
+
+            // Return the filtered result list to the view
             return View("ProductList", await results.ToListAsync());
         }
+
     }
 }

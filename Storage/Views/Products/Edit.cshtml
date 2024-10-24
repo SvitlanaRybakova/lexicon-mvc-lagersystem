@@ -31,7 +31,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Category" class="control-label"></label>
-                <input asp-for="Category" class="form-control" />
+                <select class="form-control" asp-for="Category" >
+                    <option>Other</option>
+                    <option>Tech</option>
+                    <option>Home</option>
+                    <option>Hobby</option>>
+                    <option>Office</option>
+                    <option>Toys</option>
+                    <option>Sports Equipment</option>
+                </select>
                 <span asp-validation-for="Category" class="text-danger"></span>
             </div>
             <div class="form-group">
